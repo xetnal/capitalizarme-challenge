@@ -24,6 +24,7 @@ export interface Indicador {
   "nombre": string
   "unidad_medida": string
   "valor": number
+  "startYear": number
 }
 
 
@@ -32,7 +33,7 @@ function App() {
     "Unidad de Fomento (UF)": 1977,
     "Libra de Cobre": 2012,
     "Tasa de desempleo": 2009,
-    "Euro":1999,
+    "Euro": 1999,
     "Imacec": 1997,
     "Dólar observado": 1984,
     "Tasa Política Monetaria (TPM)": 2001,
@@ -42,7 +43,7 @@ function App() {
     "Unidad Tributaria Mensual (UTM)": 1990,
     "Bitcoin": 2009
 
-    
+
   }
   const [data, setData] = useState<Data>()
   const [indicador, setIndicador] = useState<string>("")
@@ -53,13 +54,26 @@ function App() {
       `https://mindicador.cl/api`
     );
     const resp = await data.json();
-
+    // const dataWithYear = Object.entries(resp).map(item => {
+    //   // item[1].startYear = years[item[1].nombre] 
+    //   console.log(item[1])
+    //   return item
+    // })
     setData(resp);
-    console.log(resp)
+    
+    const dataWithYear = Object.entries(data).map(item => {
+      item[1].startYear = 1
+      return item
+
+
+    })
+    
   };
   useEffect(() => {
 
     getData();
+    
+    
 
   }, []);
 
