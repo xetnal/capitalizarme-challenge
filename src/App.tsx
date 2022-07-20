@@ -24,13 +24,13 @@ export interface Indicador {
   "nombre": string
   "unidad_medida": string
   "valor": number
-  "startYear": number
+  "startYear"?: number
 }
 
 
 function App() {
-  const years = {
-    "Unidad de Fomento (UF)": 1977,
+  const years: Record<string, number> = {
+    "Unidad de fomento (UF)": 1977,
     "Libra de Cobre": 2012,
     "Tasa de desempleo": 2009,
     "Euro": 1999,
@@ -45,29 +45,27 @@ function App() {
 
 
   }
-  const [data, setData] = useState<Data>()
-  const [indicador, setIndicador] = useState<string>("")
-  const [year, setYear] = useState<string>("")
-  const [startYear, setStartYear] = useState<string>("")
+  const [data, setData] = useState<Data>();
+  const [indicador, setIndicador] = useState<string>("");
+  const [month, setMonth] = useState<number>(0)
+  const [year, setYear] = useState<number>(0);
+  const [startYear, setStartYear] = useState<number>(0);
   const getData = async () => {
     const data = await fetch(
       `https://mindicador.cl/api`
     );
     const resp = await data.json();
-    // const dataWithYear = Object.entries(resp).map(item => {
-    //   // item[1].startYear = years[item[1].nombre] 
-    //   console.log(item[1])
-    //   return item
-    // })
-    setData(resp);
-    
-    const dataWithYear = Object.entries(data).map(item => {
-      item[1].startYear = 1
+    const filteredData = Object.entries(resp).filter((entry: { [key: string]: any }) => entry[1].nombre);
+    const dataWithYear: any = Object.entries(filteredData).map((item: { [key: string]: any }) => {
+
+      item[1][1].startYear = years[item[1][1].nombre]
+      
       return item
 
-
     })
+    setData(dataWithYear)
     
+
   };
   useEffect(() => {
 
@@ -75,7 +73,9 @@ function App() {
     
     
 
-  }, []);
+  }, [data]);
+
+
 
 
 
@@ -89,8 +89,11 @@ function App() {
         setYear={setYear}
         startYear={startYear}
         setStartYear={setStartYear}
+        month={month}
+        setMonth={setMonth}
       />
       {/* <Graph data={data} indicador={indicador}/> */}
+      
     </>
   );
 }
