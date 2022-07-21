@@ -26,8 +26,6 @@ export interface Indicador {
   "valor": number
   "startYear"?: number
 }
-
-
 function App() {
   const years: Record<string, number> = {
     "Unidad de fomento (UF)": 1977,
@@ -42,8 +40,6 @@ function App() {
     "Dólar acuerdo": 1988,
     "Unidad Tributaria Mensual (UTM)": 1990,
     "Bitcoin": 2009
-
-
   }
   const [data, setData] = useState<Data>();
   const [indicador, setIndicador] = useState<string>("");
@@ -57,28 +53,16 @@ function App() {
     const resp = await data.json();
     const filteredData = Object.entries(resp).filter((entry: { [key: string]: any }) => entry[1].nombre);
     const dataWithYear: any = Object.entries(filteredData).map((item: { [key: string]: any }) => {
-
       item[1][1].startYear = years[item[1][1].nombre]
-
       return item
-
     })
     setData(dataWithYear)
 
 
   };
   useEffect(() => {
-
     getData();
-
-
-
   }, [data]);
-
-
-
-
-
   return (
     <>
       <Navbar
@@ -91,9 +75,7 @@ function App() {
         setStartYear={setStartYear}
         month={month}
         setMonth={setMonth}
-      />
-      {/* <Graph data={data} indicador={indicador}/> */}
-
+      />     
       {
         <div className='d-flex justify-content-center '>
         <Plot
@@ -104,9 +86,7 @@ function App() {
               type: 'scatter',
               mode: 'lines',
               marker: { color: 'red' },
-              
             },
-            
           ]}
           layout={{ width: 620, height: 440, title: `${indicador} de ${month} de ${year}` }}
         />
