@@ -9,7 +9,7 @@ import { YearIndicator } from "./year"
 
 export const Navbar = ({ data, indicador, setIndicador, year, setYear, startYear, setStartYear, month, setMonth }: 
     { data: Data | undefined, indicador: string, setIndicador: (value: string) => void, year:number, 
-        setYear: (value: number) => void, startYear: number, setStartYear: (value:number) => void, month: number, setMonth: (value:number) => void }) => {
+        setYear: (value: number) => void, startYear: number, setStartYear: (value:number) => void, month: string, setMonth: (value:string) => void }) => {
 
     return (
         <nav className="navbar navbar-light bg-light ">

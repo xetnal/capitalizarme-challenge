@@ -22,7 +22,7 @@ export const YearIndicator = ({ data, indicador, year, setYear, startYear }: { d
     return (
         <select className="form-select mx-2" aria-label="Default select example"value={year} onChange={(e) => setYear(parseInt(e.currentTarget.value))}>
             <option >---Selecciona una opción---</option>
-           {groupedYears() }
+           {  groupedYears()  }
         </select>
     )
 }

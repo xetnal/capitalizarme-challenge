@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import './App.css';
 import { Navbar } from './components/navbar';
-
+import Plot from 'react-plotly.js';
 
 export interface Data {
   "bitcoin": Indicador
@@ -47,7 +47,7 @@ function App() {
   }
   const [data, setData] = useState<Data>();
   const [indicador, setIndicador] = useState<string>("");
-  const [month, setMonth] = useState<number>(0)
+  const [month, setMonth] = useState<string>("")
   const [year, setYear] = useState<number>(0);
   const [startYear, setStartYear] = useState<number>(0);
   const getData = async () => {
@@ -59,19 +59,19 @@ function App() {
     const dataWithYear: any = Object.entries(filteredData).map((item: { [key: string]: any }) => {
 
       item[1][1].startYear = years[item[1][1].nombre]
-      
+
       return item
 
     })
     setData(dataWithYear)
-    
+
 
   };
   useEffect(() => {
 
     getData();
-    
-    
+
+
 
   }, [data]);
 
@@ -93,7 +93,24 @@ function App() {
         setMonth={setMonth}
       />
       {/* <Graph data={data} indicador={indicador}/> */}
-      
+
+      {
+        <div className='d-flex justify-content-center '>
+        <Plot
+          data={[
+            {
+              x: [1, 2, 3],
+              y: [2, 6, 3],
+              type: 'scatter',
+              mode: 'lines',
+              marker: { color: 'red' },
+              
+            },
+            
+          ]}
+          layout={{ width: 620, height: 440, title: `${indicador} de ${month} de ${year}` }}
+        />
+      </div>}
     </>
   );
 }
